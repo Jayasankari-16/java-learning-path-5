@@ -1,0 +1,35 @@
+/* Chef is trying to invent the light bulb that can run at room temperature without electricity.
+So he has N gases numbered from 0 to N−1 that he can use and he doesn't know which one of the N gases will work but 
+we do know it.Now Chef has worked on multiple search algorithms to optimize search. For this project, 
+he uses a modulo-based search algorithm that he invented himself.
+So first he chooses an integerK and selects all indices i in increasing order such that imodK=0 and test the gases on such indices, 
+then all indices i in increasing order such that i mod K=1 imodK=1, and test the gases on such indices, and so on.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef {
+    public static void main(String[] args) throws java.lang.Exception {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            long n = sc.nextLong();
+            long p = sc.nextLong();
+            long k = sc.nextLong();
+
+            long pModK = p % k;
+            long nModK = n % k;
+            long nDivK = n / k;
+
+            long ans = pModK * nDivK;
+            if (pModK < nModK) {
+                ans += pModK;
+            } else {
+                ans += nModK;
+            }
+            ans += p / k + 1;
+            System.out.println(ans);
+        }
+    }
+}
