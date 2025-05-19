@@ -1,0 +1,48 @@
+/* There is new delicious item in Chef's menu - a doughnut chain. Doughnuts connected successively in line forming a chain.
+Chain of 3 doughnuts Chef has received an urgent order for making a chain of N doughnuts.
+He noticed that there are exactly N cooked doughnuts in the kitchen, some of which are already connected in chains. 
+The only thing he needs to do is connect them in one chain.
+He can cut one doughnut (from any position in a chain) into two halves and then use this cut doughnut to link two different chains.
+Help Chef determine the minimum number of cuts needed to complete the order.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef {
+    public static void main(String[] args) throws java.lang.Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
+
+        for (int x = 0; x < t; x++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int m = Integer.parseInt(st.nextToken());
+            int n = Integer.parseInt(st.nextToken());
+
+            int[] ar = new int[n];
+            st = new StringTokenizer(br.readLine());
+            for (int i = 0; i < n; i++) {
+                ar[i] = Integer.parseInt(st.nextToken());
+            }
+
+            Arrays.sort(ar);
+            int i = 0;
+            int j = n - 1;
+            int count = 0;
+            while (j > i) {
+                if (ar[i] >= 1) {
+                    ar[i]--;
+                    count++;
+                } else if (ar[i] == 0) {
+                    i++;
+                    if (i == j) break;
+                    if (i >= n) break;
+                    ar[i]--;
+                    count++;
+                }
+                j--;
+            }
+            System.out.println(count);
+        }
+    }
+}
