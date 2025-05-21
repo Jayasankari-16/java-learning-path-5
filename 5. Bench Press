@@ -1,0 +1,44 @@
+/* In the gym, Chef prefers to lift at least 
+W grams during a bench press and if that's impossible, Chef considers his workout to be incomplete and feels bad.
+The rod weighs Wr grams and there are N other weights lying on the floor that weigh w1,w2,...,wN grams. 
+To maintain balance and to ensure that there is no unnecessary load due to torque, 
+it's important that the weights added to the left side are symmetric to the weights added to the right side. 
+It is not required to use all of the weights. It is also not required to use any weights at all, if Chef feels satisfied lifting only the rod.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+        Scanner sc=new Scanner(System.in);
+        int t=sc.nextInt();
+        for(int x=0;x<t;x++){
+            int n=sc.nextInt();
+            int w=sc.nextInt();
+            int rod=sc.nextInt();
+            int[] ar=new int[n];
+            for(int i=0;i<n;i++){
+                ar[i]=sc.nextInt();
+            }
+            Arrays.sort(ar);
+            long result=0;
+            for(int i=0;i<n-1;i++){
+                if(ar[i]==ar[i+1]){
+                    result+=(2*ar[i]);
+                    i++;
+                }else{
+                    continue;
+                }
+            }
+            result+=rod;
+            if(result>=w){
+                System.out.println("Yes");
+            }else{
+                System.out.println("No");
+            }
+        }
+	}
+}
