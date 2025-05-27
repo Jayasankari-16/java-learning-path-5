@@ -1,0 +1,28 @@
+/* Find out the maximum number of edges this graph can have. */
+
+import java.util.*;
+class Codechef {
+    public static void main(String[] args) {
+        Scanner bz = new Scanner(System.in);
+        int t = bz.nextInt();
+        for (int test = 0; test < t; test++) {
+            int n = bz.nextInt();
+            int k = bz.nextInt();
+            int l = bz.nextInt();
+            int mid = 0;
+            if (k + l < n) {
+                mid = n - (k + l);
+            } else if (k + l > n) {
+                int temp = k + l - n;
+                k -= temp;
+                l -= temp;
+            }
+            long cook = (long) k * (mid + l) + (long) mid * l;
+            if (mid > 1) {
+                cook += (long) mid * (mid - 1) / 2;
+            }
+            System.out.println(cook);
+        }
+        bz.close();
+    }
+}
