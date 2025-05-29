@@ -1,0 +1,40 @@
+/* You are given a positive integer N.Consider an array A of length N. 
+Let Pi denote the sum of the first i elements of A and Si denote the sum of the last i elements of A.
+You need to construct the array A of size N such that all of the following conditions are met: */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		while(t-- != 0){
+		    int n=sc.nextInt();
+		    if(n%2==0){
+		        int q=n/2, p=1;
+		        for(int i=1;i<=n;i++){
+		            
+		            if(i<=n/2){
+	                    if(i%2!=0) System.out.print(p + " ");
+	                    else System.out.print(p*-1 + " ");
+	                    p++;
+	                    
+		            }else{
+		                if(i%2!=0) System.out.print(q + " ");
+	                    else System.out.print(q*-1 + " ");
+	                    q--;
+		            }        
+	            }
+		            
+		    
+		    }
+		    else System.out.print(-1);
+		    System.out.println();
+		}
+	}
+}
