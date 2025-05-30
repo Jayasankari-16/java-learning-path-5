@@ -1,0 +1,40 @@
+/* There's a zebra crossing appearing in the middle of nowhere with N blocks in it.
+The colors of the zebra crossing is represented by a binary string S, where is 1 if thei-th block from the left is white, and 0 if the block is black.
+Chef really wants to play with the zebra crossing. 
+Although the given zebra crossing might not have alternate black and white blocks, 
+Chef wants to follow the alternating white-black color pattern while crossing it.Initially, Chef stands at block 1.
+Chef has to jump exactly K times, and in each jump he has to move forward and jump to a different color than that previously occupied by Chef. 
+More formally, suppose that Chef is currently at block i and wants to jump to block j then following conditions should hold: */
+
+import java.io.*;
+import java.util.*;
+class ZEBRA {
+	static class FastReader {
+		BufferedReader br; StringTokenizer st;
+		public FastReader(){
+			br=new BufferedReader(new InputStreamReader(System.in));}
+		String next(){
+			while(st==null || !st.hasMoreElements())
+				try{ st=new StringTokenizer(br.readLine()); }
+				catch(IOException e){ e.printStackTrace(); }
+			return st.nextToken(); }
+		int nextInt(){ return Integer.parseInt(next()); }
+	}
+	public static void main(String[] args) {
+		FastReader in=new FastReader();
+		PrintWriter out=new PrintWriter(System.out);
+		int tt=in.nextInt();
+		while(tt-->0) {
+			int n=in.nextInt(),
+				k=in.nextInt(),
+				j=1;
+			String s=in.next();
+			char c=k%2==s.charAt(0)-'0'?'0':'1';
+			while(j<n&&k>0) {
+				if(s.charAt(j)!=s.charAt(j-1)) k--;
+				j++;
+			}
+			out.println(k==0?s.lastIndexOf(c)+1:-1);
+		} out.close();
+	}
+}
