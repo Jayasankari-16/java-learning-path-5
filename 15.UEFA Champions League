@@ -1,0 +1,180 @@
+/* The UEFA Champions League is the most prestigious annual sports competition in the world.
+In the group stage of this competition, European football clubs are divided into 8 groups;
+there are four teams in each group. The teams in each group are ranked based on the matches they play against each other, according to the following rules:
+Based on the results of matches, teams are awarded points. Each football match is played between a home team and an away team.
+If one of the teams scores more goals than the other, this team gains 
+3 points and the other team gains 0 points. In case of a tie (if both teams score the same number of goals), 
+each of those teams gains 1 point.The goal difference of a team is the number of goals it scored minus the number of goals it received,
+regardless if it scored/received them as the home team or as the away team.
+Between any two teams, the team with more points is ranked higher.If they have the same number of points (in case of a tie),
+the team with higher goal difference is ranked higher.Each team plays two matches against every other team in its group ― one match as the home team and one match as the away team.
+You are given the number of goals scored by each team for all twelve matches in one group.
+Determine the leaders of this group ― the first and second top-ranked team. It is guaranteed that there are no ties for either of these places (for the given results of the matches).*/
+
+/* package codechef; // don't place package name! */
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+/* Name of the class has to be "Main" only if the class is public. */
+class Codechef
+{
+    private static BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+	private static BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(System.out));
+	private static long mod=(long)1E9+7L;
+	
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int tt=Integer.parseInt(reader.readLine().trim());
+		while(tt-->0){
+		    Map<String, int[]> scoreMap=new HashMap<>();
+		    String[] names=new String[4];
+		    int idx=0;
+		    Set<String> taken=new HashSet<>();
+		    for(int i=0;i<12;i++){
+		        String[] s=reader.readLine().trim().split(" vs. ");
+		        String[] p1=s[0].split("\\s+");
+		        String n1=p1[0].trim();
+		        int goals=Integer.parseInt(p1[1]);
+		        String[] p2=s[1].split("\\s+");
+		        String n2=p2[1].trim();
+		        int goals2=Integer.parseInt(p2[0]);
+		        
+		        scoreMap.putIfAbsent(n1, new int[]{0, 0});
+		        scoreMap.putIfAbsent(n2, new int[]{0, 0});
+		        
+		        if(goals>goals2){
+		            int[] temp=scoreMap.get(n1);
+		            temp[0]+=3;
+		            temp[1]+=(goals-goals2);
+		            scoreMap.put(n1, temp);
+		            
+		            temp=scoreMap.get(n2);
+		            temp[1]+=(goals2-goals);
+		            scoreMap.put(n2, temp);
+		        }else if(goals2>goals){
+		            int[] temp=scoreMap.get(n2);
+		            temp[0]+=3;
+		            temp[1]+=(goals2-goals);
+		            scoreMap.put(n2, temp);
+		            
+		            temp=scoreMap.get(n1);
+		            temp[1]+=(goals-goals2);
+		            scoreMap.put(n1, temp);
+		        }else{
+		            int[] temp=scoreMap.get(n1);
+		            temp[0]+=1;
+		            temp[1]+=(goals-goals2);
+		            scoreMap.put(n1, temp);
+		            
+		            temp=scoreMap.get(n2);
+		            temp[0]+=1;
+		            temp[1]+=(goals2-goals);
+		            scoreMap.put(n2, temp);
+		        }
+		      //  System.out.println(Arrays.toString(names)+"     "+taken+"   "+n1+"    "+n2);
+		        if(!taken.contains(n1)){
+		            taken.add(n1);
+		            names[idx++]=n1;
+		        }
+		        if(!taken.contains(n2)){
+		            taken.add(n2);
+		            names[idx++]=n2;
+		        }
+		    }
+		    Arrays.sort(names, (x, y)->{
+		        int[] xd=scoreMap.get(x);
+		        int[] yd=scoreMap.get(y);
+		        if(xd[0]!=yd[0]){
+		            return Integer.compare(yd[0], xd[0]);
+		        }
+		        return Integer.compare(yd[1], xd[1]);
+		    });
+		    writer.write(String.format("%s %s\n", names[0], names[1]));
+		  //  for(String k: scoreMap.keySet()){
+		  //      System.out.println(k+"    "+Arrays.toString(scoreMap.get(k)));
+		  //  }
+		}
+		writer.flush();
+	}
+	
+	private static long mod(long n, long m){
+	    if(n>=0){
+	        return n%m;
+	    }
+	    return ((m-Math.abs(n)%m))%m;
+	}
+	
+	private static void printArray(int[] nums) throws java.lang.Exception{
+	    for(int i=0;i<nums.length;i++){
+	        writer.write((i==0?"":" ")+nums[i]);
+	    }
+	    writer.write("\n");
+	}
+	
+	private static void printArray(long[] nums) throws java.lang.Exception{
+	    for(int i=0;i<nums.length;i++){
+	        writer.write((i==0?"":" ")+nums[i]);
+	    }
+	    writer.write("\n");
+	}
+    
+    private static int[] parseInt(String str) {
+        String[] parts=str.split("\\s+");
+        int[] ans=new int[parts.length];
+        for(int i=0;i<ans.length;i++){
+            ans[i]=Integer.parseInt(parts[i]);
+        }
+        return ans;
+    }
+
+    private static long[] parseLong(String str) {
+        String[] parts=str.split("\\s+");
+        long[] ans=new long[parts.length];
+        for(int i=0;i<ans.length;i++){
+            ans[i]=Long.parseLong(parts[i]);
+        }
+        return ans;
+    }
+    
+    private static int[] parseInt(String str, int n) {
+        int[] ans = new int[n];
+        int idx = 0;
+        for (int k = 0; k < str.length(); ) {
+            int j = k;
+            int sum = 0;
+            while (j < str.length() && str.charAt(j) != ' ') {
+                if (str.charAt(j) == '-') {
+                    j++;
+                    continue;
+                }
+                sum = sum * 10 + str.charAt(j) - '0';
+                j++;
+            }
+            ans[idx++] = (str.charAt(k) == '-' ? -1 : 1) * sum;
+            k = j + 1;
+        }
+        return ans;
+    }
+    
+    private static long[] parseLong(String str, int n) {
+        long[] ans = new long[n];
+        int idx = 0;
+        for (int k = 0; k < str.length(); ) {
+            int j = k;
+            long sum = 0L;
+            while (j < str.length() && str.charAt(j) != ' ') {
+                if (str.charAt(j) == '-') {
+                    j++;
+                    continue;
+                }
+                sum = sum * 10 + str.charAt(j) - '0';
+                j++;
+            }
+            ans[idx++] = (str.charAt(k) == '-' ? -1L : 1L) * sum;
+            k = j + 1;
+        }
+        return ans;
+    }
+}
