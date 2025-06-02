@@ -1,0 +1,52 @@
+/* Chef has an array A of length N and an integer X. 
+In one operation, Chef does the following:Find the smallest element in the current array.
+Let this be S.Next, pick any one index i such that Ai=S Finally, replace Ai  with Ai ⊕X Here ⊕ denotes the bitwise XOR operation For example,
+if A=[1,1,2] and X=4, then in one move Chef can turn the array into either [5,1,2] or [1,5,2].Chef performs this operation exactly Y times.
+Let B be final array obtained.Output the array B in sorted order. Note that under this restriction, the output is unique.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while(t-->0){
+            int n = sc.nextInt();
+            long x = sc.nextLong();
+            long y = sc.nextLong();
+            long arr[] = new long[n];
+            for(int i=0;i<n;i++){
+                arr[i] = sc.nextLong();
+            }
+            
+            Arrays.sort(arr);
+            int smlIdx = 0;
+            arr[0] ^= x;
+            y--;
+            int i=1;
+            while(i<n && arr[i] < arr[smlIdx] && y>0){
+                arr[i] = arr[i] ^ x;
+                if(arr[i]<arr[smlIdx]){
+                    smlIdx = i;
+                }
+                y--;
+                i++;
+            }
+            
+            if(y!=0){
+                if(y%2!=0){
+                    arr[smlIdx] ^= x;
+                }
+            }
+            Arrays.sort(arr);
+            for(i=0; i<n;i++){
+                System.out.print(arr[i]+" ");
+            }
+            System.out.println();  
+     }
+	}
+}
