@@ -1,0 +1,61 @@
+/* JJ has an array A. He can perform the following operation on A:
+Divide A into two subsequences P and Q such that each Ai belongs to either P or Q.concat A:=P
+concat QHere concat concat denotes the concatenation operation. 
+For e.g. concat[2,1,5] concat [4,3]=[2,1,5,4,3].Is it possible to make A sorted in non-decreasing order after applying the above operation at most once?Note:
+An array X is a subsequence of an array Y if X can be obtained by deletion of several (possibly, zero or all) elements from Y.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while(t-->0){
+            int n = sc.nextInt();
+            long arr1[] = new long[n];
+            for(int i=0; i<n; i++){
+                arr1[i] = sc.nextLong();
+            }
+            if(n==1){
+                System.out.println("NO");
+            }else{
+                long arr2[] = new long[n];
+                for(int i=0; i<n; i++){
+                    arr2[i] = arr1[i];
+                }
+                Arrays.sort(arr2);
+                int countP = 0, countQ=0;
+                int i=0,j=0;
+                while(i<n && j<n){
+                    if(arr1[i]==arr2[j]){
+                        countP++;
+                        j++;
+                        i++;
+                    }else{
+                        i++;
+                    }
+                }
+                i=0;
+                while(i<n && j<n){
+                    if(arr1[i]==arr2[j]){
+                        countQ++;
+                        i++;
+                        j++;
+                    }else{
+                        i++;
+                    }
+                }
+                if(countP+countQ==arr1.length){
+                    System.out.println("YES");
+                }else{
+                    System.out.println("NO");
+                }
+            }
+        }
+	}
+}
