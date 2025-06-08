@@ -1,0 +1,34 @@
+/* Chef has 4 positive integers A, B, C, and D such that AB=C % D.
+Find the smallest positive integer X such that (A+X) B=(C+X) % D holds.It is guaranteed that such X always exists.*/
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            long a = sc.nextLong();
+            long b = sc.nextLong();
+            long c = sc.nextLong();
+            long d = sc.nextLong();
+
+            if ((a + 1) % b == (c + 1) % d) {
+                System.out.println("1");
+                continue;
+            }
+
+            long lcm = lcm(b, d);
+            System.out.println(lcm - (a % b));
+        }
+    }
+    public static long gcd(long a, long b) {
+        if (b == 0) return a;
+        return gcd(b, a % b);
+    }
+
+    public static long lcm(long a, long b) {
+        return a * b / gcd(a, b);
+    }
+}
