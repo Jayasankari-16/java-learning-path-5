@@ -1,0 +1,76 @@
+/* Consider an array A consisting of N positive elements.
+The frequency array of A is the arrayB of size N such that Bi = frequency of element Ai in A.
+For example, if A=[4,7,4,11,2,7,7], the frequency array B=[2,3,2,1,1,3,3].
+You have lost the array A, but fortunately you have the array B.
+Your task is to construct the lexicographically smallest array A such that1≤Ai≤105 ;
+The frequency array of A is equal to BIf no such array A exists, print −1.Note:
+Array X is lexicographically smaller than array Y, if Xi<Yi , where i is the first index where X and Y differ.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class Item{
+    int value;
+    int count;
+    
+    Item(int value,int count){
+        this.count=count;
+        this.value = value;
+    }
+}
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner sc = new Scanner(System.in);
+		int t=sc.nextInt();
+		StringBuilder op=new StringBuilder("");
+		
+		while(t-->0){
+		      int n = sc.nextInt();
+		      int[] arr = new int[n];
+		      
+		      for(int i=0;i<n;i++){
+		          arr[i]=sc.nextInt();
+		      }
+		      
+		      HashMap<Integer,Item> hmp = new HashMap<Integer,Item>();
+		      
+		      int cntr = 1;
+		      StringBuilder res = new StringBuilder("");
+		      for(int i=0;i<n;i++){
+		          if(hmp.containsKey(arr[i])){
+		              Item val = hmp.get(arr[i]);
+		              
+		              if(arr[i] == val.count){
+		                  hmp.put(arr[i],new Item(cntr,1));
+		                  cntr++;
+		              }
+		              else{
+		                  hmp.put(arr[i],new Item(val.value,val.count+1));
+		              }
+		              res.append(hmp.get(arr[i]).value+" ");
+		          }
+		          else{
+		              hmp.put(arr[i],new Item(cntr,1));
+		              res.append(hmp.get(arr[i]).value+" ");
+		              cntr++;
+		          }
+		      }
+		      
+		      for(Map.Entry<Integer,Item> item:hmp.entrySet()){
+		          if(item.getKey()!=item.getValue().count){
+		              res=new StringBuilder("-1");
+		          }
+		      }
+		      
+		      res.append("\n");
+		      op.append(res);
+		    
+		}
+		
+		System.out.print(op.toString());
+		
+	}
+}
