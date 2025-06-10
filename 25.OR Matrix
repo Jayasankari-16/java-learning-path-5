@@ -1,0 +1,57 @@
+/* ou are given a matrix of integers A with N rows (numbered 1 through N) and M columns (numbered 1 through M).
+Each element of this matrix is either 0 or 1.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		 Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        while (T-- > 0) {
+            int N = sc.nextInt(), M = sc.nextInt();
+            boolean[] rowHasOne = new boolean[N];
+            boolean[] colHasOne = new boolean[M];
+            char[][] A = new char[N][];
+            boolean hasAnyOne = false;
+
+            
+            for (int i = 0; i < N; i++) {
+                A[i] = sc.next().toCharArray();
+                for (int j = 0; j < M; j++) {
+                    if (A[i][j] == '1') {
+                        rowHasOne[i] = true;
+                        colHasOne[j] = true;
+                        hasAnyOne = true;
+                    }
+                }
+            }
+
+          
+            StringBuilder out = new StringBuilder();
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < M; j++) {
+                    int ans;
+                    if (A[i][j] == '1') {
+                        ans = 0;
+                    } else if (rowHasOne[i] || colHasOne[j]) {
+                        ans = 1;
+                    } else if (hasAnyOne) {
+                        ans = 2;
+                    } else {
+                        ans = -1;
+                    }
+                    out.append(ans).append(' ');
+                }
+                out.setLength(out.length() - 1);
+                out.append('\n');
+            }
+            System.out.print(out);
+        }
+
+	}
+}
