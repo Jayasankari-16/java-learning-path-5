@@ -1,0 +1,92 @@
+/* There are N people working in a building, and each one works in a separate cabin.
+Chef’s employees are numbered by integers from 1 to N, inclusive. Chef wants to ensure the safety of his employees. 
+He wants to have fire escapes in the building and wants to train the employees to use these by conducting mock drills.
+Chef knows that the number of people working in his office can be very large. In order to avoid crowding of a common fire escape route during emergency, Chef has decided to build multiple fire escapes.
+For the safety of every employee, each cabin has a fire exit which is connected to one of the fire escape routesA lot of employees are friends with each other.
+The friendship is mutual. This means that if employee i is a friend of employee j then employee j is a friend of employee i as well. But friendship is NOT necessarily transitive. 
+This means that if employeei is a friend of employee j AND employee j is a friend of employee k, then employee i and employee k need not necessarily be friends.
+If two employees are friends, they do not want to escape through different routes. This complicates the task for the Chef.
+As already mentioned, he wants to have the maximum number of fire escape routes to ensure maximum safety.
+Also, for every escape route, one of the employees using that route needs to be appointed as the fire drill captain.
+The captain will be responsible for conducting the mock drills and train all the employees using that route. Your task is simple. 
+Given the number of employees and the friendship list, you need to tell the Chef the maximum number of fire escape routes that he can have in the building and the number of ways of selecting the captains for every route.
+Since the number of ways can be really large, output this value modulo 109 +7.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+    static final int mod = 1000000007;
+    static ArrayList < ArrayList < Integer >> graph;
+    static boolean[] visited;
+
+
+    static int DfS(int node) {
+
+        visited[node] = true;
+
+        Stack < Integer > stack = new Stack < > ();
+        stack.push(node);
+        int size = 0;
+
+        while (!stack.isEmpty()) {
+            int current = stack.pop();
+
+            size++;
+
+            for (int n: graph.get(current)) {
+                if (!visited[n]) {
+                    visited[n] = true;
+                    stack.push(n);
+                }
+            }
+        }
+
+        return size;
+    }
+    public static void main(String[] args) throws java.lang.Exception
+    {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt(); // Number of test cases
+
+        while (T--> 0) {
+            int N = sc.nextInt(); // Number of employees (nodes)
+            int M = sc.nextInt(); // Number of friendships (edges)
+
+
+
+            graph = new ArrayList < > ();
+            visited = new boolean[N];
+
+            for (int i = 0; i < N; i++) {
+                graph.add(new ArrayList < > ());
+            }
+
+            for (int i = 0; i < M; i++) {
+
+                int u = sc.nextInt() - 1;
+                int v = sc.nextInt() - 1;
+
+                graph.get(u).add(v);
+                graph.get(v).add(u);
+            }
+
+            int components = 0;
+            long ways = 1;
+            
+            for(int i=0;i<N;i++){
+                
+                if(!visited[i]){
+                    int size=DfS(i);
+                    components++;
+                    
+                    ways=(ways*size)%mod;
+                }
+            }
+            
+            System.out.println(components + " " + ways);
+        }
+    }
+}
