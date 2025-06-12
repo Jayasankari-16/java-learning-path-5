@@ -1,0 +1,38 @@
+/* Chef has three numbers A,B, and C.He can do the following type of operation Select two numbers amongst A,B, and C;
+Add 1 to the selected numbers;Subtract 1 from the remaining number.
+Determine whether Chef can make all the three numbers equal after applying the above operation any number of timesIf yes, output the minimum number of operations required by Chef.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int T = Integer.parseInt(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		for(int j = 0; j<T; j++){
+		    String[] arr = br.readLine().trim().split(" ");
+		    long[] ans = new long[3];
+		    for(int i = 0; i<3; i++){
+		        ans[i] = Long.parseLong(arr[i]);
+		    }
+		    sb.append(solve(ans)).append("\n");
+		}
+		System.out.print(sb);
+	}
+	public static long solve(long[] ans){
+	   Arrays.sort(ans);
+	   long a= ans[0];
+	   long b= ans[1];
+	   long c= ans[2];
+	   
+	   if((a%2==b%2)&&(b%2==c%2)){
+	       long aa = (b-2*a+c)/2;
+	       return aa;
+	   } 
+	   return -1;
+	}
+}
