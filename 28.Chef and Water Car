@@ -1,0 +1,118 @@
+/* Chef is a great mechanic.
+As the cost of petrol is increasing day by day he decided to build a water car to take his girlfriend Natasha on a date.
+Water car has great build quality but is able to travel only 1 Km on every 1 liter of water.
+To show off his water car to Natasha he took her to the formula racing track which is an (N−1) km long road with checkpoints numbered 1 to N from left to right.
+The distance between two adjacent checkpoints is 1 Km.Initially, Chef is at checkpoint number 1 and the tank of the water car is empty. 
+At every checkpoint, there is a water station, but the cost of filling 1 liter of water at a checkpoint is equal to the checkpoint number. 
+Chef can not store more than V liters of water in the tank of a car. 
+Chef is interested in both minimum as well as the maximum cost of filling that can happen to reach the checkpoint number N.
+You shouldn't have any water left after reaching Nth checkpoint. Also, you are not allowed to pour out water.*/
+
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+    private static BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+	private static BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(System.out));
+	private static long mod=(long)1E9+7L;
+	
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int tt=Integer.parseInt(reader.readLine().trim());
+		while(tt-->0){
+		    int[] a=parseInt(reader.readLine().trim(), 2);
+		    long n=a[0], v=a[1];
+		    long max=(n*(n-1L))/2L;
+		    long min=0L;
+		    if(v>=n-1L){
+		        min=n-1L;
+		    }else{
+		        min=v-1L+(((n-v)*(n-v+1L))>>1);
+		    }
+		    writer.write(max+" "+min+"\n");
+		}
+		writer.flush();
+	}
+	
+	private static long mod(long n, long m){
+	    if(n>=0){
+	        return n%m;
+	    }
+	    return ((m-Math.abs(n)%m))%m;
+	}
+	
+	private static void printArray(int[] nums) throws java.lang.Exception{
+	    for(int i=0;i<nums.length;i++){
+	        writer.write((i==0?"":" ")+nums[i]);
+	    }
+	    writer.write("\n");
+	}
+	
+	private static void printArray(long[] nums) throws java.lang.Exception{
+	    for(int i=0;i<nums.length;i++){
+	        writer.write((i==0?"":" ")+nums[i]);
+	    }
+	    writer.write("\n");
+	}
+    
+    private static int[] parseInt(String str) {
+        String[] parts=str.split("\\s+");
+        int[] ans=new int[parts.length];
+        for(int i=0;i<ans.length;i++){
+            ans[i]=Integer.parseInt(parts[i]);
+        }
+        return ans;
+    }
+
+    private static long[] parseLong(String str) {
+        String[] parts=str.split("\\s+");
+        long[] ans=new long[parts.length];
+        for(int i=0;i<ans.length;i++){
+            ans[i]=Long.parseLong(parts[i]);
+        }
+        return ans;
+    }
+    
+    private static int[] parseInt(String str, int n) {
+        int[] ans = new int[n];
+        int idx = 0;
+        for (int k = 0; k < str.length(); ) {
+            int j = k;
+            int sum = 0;
+            while (j < str.length() && str.charAt(j) != ' ') {
+                if (str.charAt(j) == '-') {
+                    j++;
+                    continue;
+                }
+                sum = sum * 10 + str.charAt(j) - '0';
+                j++;
+            }
+            ans[idx++] = (str.charAt(k) == '-' ? -1 : 1) * sum;
+            k = j + 1;
+        }
+        return ans;
+    }
+    
+    private static long[] parseLong(String str, int n) {
+        long[] ans = new long[n];
+        int idx = 0;
+        for (int k = 0; k < str.length(); ) {
+            int j = k;
+            long sum = 0L;
+            while (j < str.length() && str.charAt(j) != ' ') {
+                if (str.charAt(j) == '-') {
+                    j++;
+                    continue;
+                }
+                sum = sum * 10 + str.charAt(j) - '0';
+                j++;
+            }
+            ans[idx++] = (str.charAt(k) == '-' ? -1L : 1L) * sum;
+            k = j + 1;
+        }
+        return ans;
+    }
+}
