@@ -1,0 +1,143 @@
+/"* Welcome to The Mega City!
+Neo finds himself in a high-stakes situation.
+He has a string S of length N and his task is to crack the string using the vowel matrix.
+The vowel matrix is a unique cryptographic scheme where the string is sliced into multiple pieces, such that, each piece contains exactly K vowels.
+Determine the number of ways you can slice the string S using vowel matrix scheme.
+Since the number can be huge, print it modulo 109+7.*/
+
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+    private static BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+	private static BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(System.out));
+	private static long mod=(long)1E9+7L;
+	
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int tt=Integer.parseInt(reader.readLine().trim());
+		while(tt-->0){
+		    int[] a=parseInt(reader.readLine().trim(), 2);
+		    int n=a[0], k=a[1];
+		    String s=reader.readLine().trim();
+		    List<List<Integer>> lists=new ArrayList<>();
+		    for(int i=0;i<n;){
+		        int j=i;
+		        int c=0;
+		        List<Integer> idx=new ArrayList<>();
+		        while(c<=k && j<n){
+		            c+=isVowel(s.charAt(j));
+		            if(c>k){
+		                break;
+		            }
+		            if(c==k){
+		                idx.add(j);
+		            }
+		            j++;
+		        }
+		        lists.add(idx);
+		        i=j;
+		    }
+		    if(lists.size()==1){
+		        writer.write("1\n");
+		        continue;
+		    }
+		    long ans=lists.get(0).size();
+		    for(int i=1;i<lists.size();i++){
+		        ans*=(i==lists.size()-1?1L:(lists.get(i).size()));
+		        ans=mod(ans, mod);
+		    }
+		    writer.write(ans+"\n");
+		}
+		writer.flush();
+	}
+	
+	private static int isVowel(char c){
+	    if(c=='a' || c=='e' || c=='i' || c=='o' || c=='u'){
+	        return 1;
+	    }
+	    return 0;
+	}
+	
+	private static long mod(long n, long m){
+	    if(n>=0){
+	        return n%m;
+	    }
+	    return ((m-Math.abs(n)%m))%m;
+	}
+	
+	private static void printArray(int[] nums) throws java.lang.Exception{
+	    for(int i=0;i<nums.length;i++){
+	        writer.write((i==0?"":" ")+nums[i]);
+	    }
+	    writer.write("\n");
+	}
+	
+	private static void printArray(long[] nums) throws java.lang.Exception{
+	    for(int i=0;i<nums.length;i++){
+	        writer.write((i==0?"":" ")+nums[i]);
+	    }
+	    writer.write("\n");
+	}
+    
+    private static int[] parseInt(String str) {
+        String[] parts=str.split("\\s+");
+        int[] ans=new int[parts.length];
+        for(int i=0;i<ans.length;i++){
+            ans[i]=Integer.parseInt(parts[i]);
+        }
+        return ans;
+    }
+
+    private static long[] parseLong(String str) {
+        String[] parts=str.split("\\s+");
+        long[] ans=new long[parts.length];
+        for(int i=0;i<ans.length;i++){
+            ans[i]=Long.parseLong(parts[i]);
+        }
+        return ans;
+    }
+    
+    private static int[] parseInt(String str, int n) {
+        int[] ans = new int[n];
+        int idx = 0;
+        for (int k = 0; k < str.length(); ) {
+            int j = k;
+            int sum = 0;
+            while (j < str.length() && str.charAt(j) != ' ') {
+                if (str.charAt(j) == '-') {
+                    j++;
+                    continue;
+                }
+                sum = sum * 10 + str.charAt(j) - '0';
+                j++;
+            }
+            ans[idx++] = (str.charAt(k) == '-' ? -1 : 1) * sum;
+            k = j + 1;
+        }
+        return ans;
+    }
+    
+    private static long[] parseLong(String str, int n) {
+        long[] ans = new long[n];
+        int idx = 0;
+        for (int k = 0; k < str.length(); ) {
+            int j = k;
+            long sum = 0L;
+            while (j < str.length() && str.charAt(j) != ' ') {
+                if (str.charAt(j) == '-') {
+                    j++;
+                    continue;
+                }
+                sum = sum * 10 + str.charAt(j) - '0';
+                j++;
+            }
+            ans[idx++] = (str.charAt(k) == '-' ? -1L : 1L) * sum;
+            k = j + 1;
+        }
+        return ans;
+    }
+}
