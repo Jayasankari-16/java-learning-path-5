@@ -1,0 +1,64 @@
+/8 An array B of length M is called an anti-palindrome if no pair of its opposite elements are equal.
+That is,i=B M+1−i should hold for every index 1≤i≤M.
+For example, [1,2] and[1,2,3,2] are anti-palindromes, but [1,2,3] and [1,2,3,1] are not (i=2 is violated in the first case, i=1 in the second)
+We say the array B is beautiful if every cyclic rotation†of B is an anti-palindrome You are given an array A of length N,
+which contains only the integers 1,2, and 3.Answer Q queries on this arrB=[AL,AL+1,…,AR ] denote the subarray of A from index L to index R.
+Is it possible to rearrange the elements of B to make it beautiful?*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		 Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            int z = sc.nextInt();
+            int[] arr = new int[n + 1];
+            int[] brr1 = new int[n + 1];
+            int[] brr2 = new int[n + 1];
+            int[] brr3 = new int[n + 1];
+            for (int i = 1; i <= n; i++)
+                arr[i] = sc.nextInt();
+
+            for (int i = 1; i <= n; i++) {
+                brr1[i] = brr1[i - 1] + (arr[i] == 1 ? 1 : 0);
+            }
+            for (int i = 1; i <= n; i++) {
+
+                brr2[i] = brr2[i - 1] + (arr[i] == 2 ? 1 : 0);
+            }
+            for (int i = 1; i <= n; i++) {
+
+                brr3[i] = brr3[i - 1] + (arr[i] == 3 ? 1 : 0);
+            }
+
+            while (z-- > 0) {
+                int cnt = 0;
+                int l = sc.nextInt();
+                int r = sc.nextInt();
+                int mid = r - l + 1;
+                int k = mid / 2;
+
+                if (mid % 2 != 0) {
+                    System.out.println("No");
+                    continue;
+                }
+                int f1 = brr1[r] - brr1[l - 1];
+                int f2 = brr2[r] - brr2[l - 1];
+                int f3 = brr3[r] - brr3[l - 1];
+                if (f1==k||f2==k||f3==k) {
+                    System.out.println("Yes");
+                } else {
+                    System.out.println("No");
+                }
+            }
+        }
+	}
+}
