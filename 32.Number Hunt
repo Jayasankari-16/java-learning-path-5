@@ -1,0 +1,45 @@
+/* Given a positive integer X, find the smallest positive integer Y satisfying all of the following conditions:
+Y should not be a prime;Y should not be a perfect square No factor of Y other than 1 is less than X.
+Note that Y might not fit in a 32 bit integer.*//
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+	    Scanner ip = new Scanner(System.in);
+        int t_c = ip.nextInt();
+        
+        while (t_c-- > 0) {
+            int num_x_c = ip.nextInt();
+            
+            int P_1st = num_x_c;
+            while (!find_bool_prime(P_1st)) {
+                P_1st++;
+            }
+            int P_2nd = P_1st + 1;
+            while (!find_bool_prime(P_2nd)) {
+                P_2nd++;
+            }
+            long chaitanya_ans = (long) P_1st * P_2nd;
+            System.out.println(chaitanya_ans);
+        }
+    }
+    
+    public static boolean find_bool_prime(int x_c) {
+        if (x_c <= 1) return false;
+        else if (x_c <= 3) return true;
+        else 
+         if(x_c % 2 == 0 ||x_c % 3 == 0) return false;
+        for (int p = 5; p * p <= x_c; p += 6) {
+            if (x_c % p == 0 || x_c % (p + 2) == 0) return false;
+        }
+        return true;
+    }
+
+    
+}
+    
