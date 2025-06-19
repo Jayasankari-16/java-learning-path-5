@@ -1,0 +1,48 @@
+/* You are given an array A containing N integers.
+Count the number of ordered pairs (i,j) such that:1≤i,j≤N, andAij≤Aj That is, Ai raised to the power j doesn't exceed Aj. 
+Note that we're counting ordered pairs, meaning the pair (1,2) is different from the pair (2,1).You are given an array A containing N integers.
+Count the number of ordered pairs (i,j) such that:1≤i,j≤N, and Aij ≤Aj That is, Ai raised to the power j doesn't exceed Aj .
+Note that we're counting ordered pairs, meaning the pair (1,2) is different from the pair (2,1).*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+			Scanner sc=new Scanner(System.in);
+		int t=sc.nextInt();
+		while(t-->0){
+		    int n = sc.nextInt();
+		    int arr[] = new int[n+1];
+		    for(int i=1;i<=n;i++){
+		        arr[i] = sc.nextInt();
+		    }
+		    long ans = 0;
+		    for(int i=1;i<=n;i++){ 
+		        long left =(long) arr[i];
+		        if(left==1){
+		            ans=ans+(long)n;
+		        }else{
+		            long power = 1;
+    		       for(int j=1;j<=n;j++){
+    		           
+    		           power = left * power;
+    		           if(power>1000000000L){
+    		               break;
+    		           }
+    		           else
+    		           {
+    		               long right = (long) arr[j];
+    		               if(power<=right)
+    		                   ans++;
+    		           }
+    		       }
+		        }     
+		    }
+		    System.out.println(ans); 
+		}
+	}
+}
