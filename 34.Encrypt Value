@@ -1,0 +1,36 @@
+/* You are given an array A containing N integers.
+Consider the following process:Let S=0 initially.For each i from 1 to N in order, update S to either (S×A i).
+That is, either add Ai to S or multiply S by Ai .Before performing the process, you're allowed to freely rearrange the elements of A as you like.
+If you choose the rearrangement of A and the sequence of operations optimally, what's the maximum possible value of S that you can obtain?This maximum value can be very large,
+so print it modulo 109 +7.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef {
+    static final int MOD = 1000000007; 
+    public static void main(String[] args) throws java.lang.Exception {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            long n = sc.nextLong();
+            long[] arr = new long[(int) n];
+            
+            for (int i = 0; i < n; i++) {
+                arr[i] = sc.nextLong();
+            }
+            Arrays.sort(arr);
+            long result = arr[0];
+            
+            for (int i = 1; i < n; i++) {
+                if (arr[i] == 1 || arr[i] == 0|| (result <= 1 && arr[i] > 1) ) {
+                    result = (result + arr[i]) % MOD; 
+                } else {
+                    result = (result * arr[i]) % MOD; 
+                }
+            }
+            System.out.println(result);
+        }
+    }
+}
