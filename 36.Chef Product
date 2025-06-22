@@ -1,0 +1,40 @@
+/* Chef has a special interest in studying sets of integers.
+Given an integer N, he defines a good-set as a set of distinct non-negative integers, such that:
+The sum of the integers in the set is equal to N.
+The product of each non-empty subset of the set is odd.
+Determine the number of distinct sizes of good-set that can be formed.*/
+
+import java.util.*;
+import java.lang.*;
+import java.math.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner sc=new Scanner(System.in);
+		int t=sc.nextInt();
+		while(t-->0)
+		{
+		    BigInteger vachi=sc.nextBigInteger();
+		    //read the variable
+		    int k=0;
+		    while(k<10)
+		    {
+		        k++;
+		    }
+		    k=k/10;
+		    k*=100;
+		    BigInteger gnani=vachi.sqrt();
+		    //calculated the square root of the variable
+		    k=k-50;
+		    k+=25;
+		    k-=75;
+		    while(k<10)
+		    {
+		        k++;
+		    }
+		    System.out.println((vachi.mod(BigInteger.valueOf(2)).equals(BigInteger.ONE))?gnani.add(BigInteger.ONE).divide(BigInteger.valueOf(2)):gnani.divide(BigInteger.valueOf(2)));
+        }
+	}
+}
