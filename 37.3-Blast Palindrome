@@ -1,0 +1,40 @@
+/* You are given a string S of length N.
+Your task is to convert the string into a non-empty palindrome using the following operation any (possibly zero) number of times:
+Choose an index 1<i<∣S∣, where ∣S∣ denotes the current length of string;
+Remove the characters at indices (i−1), i, and (i+1) from the string and concatenate remaining part(s) of the string.
+Print YES if it is possible to convert the string into a non-empty palindrome and NO otherwise.*/
+
+import java.io.*;
+import java.util.*;
+class BLAST3 {
+	static class FastReader {
+		BufferedReader br; StringTokenizer st;
+		public FastReader(){
+			br=new BufferedReader(new InputStreamReader(System.in));}
+		String next(){
+			while(st==null || !st.hasMoreElements())
+				try{ st=new StringTokenizer(br.readLine()); }
+				catch(IOException e){ e.printStackTrace(); }
+			return st.nextToken(); }
+		int nextInt(){ return Integer.parseInt(next()); }
+	}
+	public static void main(String[] args) {
+		FastReader in=new FastReader();
+		PrintWriter out=new PrintWriter(System.out);
+		int tt=in.nextInt();
+		while(tt-->0) {
+			int n=in.nextInt(),
+				m=n%3;
+			String s=in.next();
+			boolean ok=m==1;
+			if(!ok) {
+				int a[]=new int[26];
+				for(int i=(m+2)%3;i<n;i+=3)
+					a[s.charAt(i)-'a']=i;
+				for(int i=0;i<n&&!ok;i+=3)
+					ok=a[s.charAt(i)-'a']>i;
+			}
+			out.println(ok?"YES":"NO");
+		} out.close();
+	}
+}
