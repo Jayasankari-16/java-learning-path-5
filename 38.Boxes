@@ -1,0 +1,36 @@
+/* You are given an array A of length N such that:2×(A1⊕A2⊕…⊕A N)≥(A1∣A2∣…∣AN ), where ⊕ and ∣ denote the bitwise xor and or operations respectively.
+Your task is to perform the following operation until the array is empty:Choose any element Ai from the array.Remove Ai from the array.
+  Perform one of the following:Use a new box and add Ai to the box.Select an existing box such that the XOR of all the elements in the box (before placing Ai) is greater than or equal to Ai and add Ai to the box.
+  Determine the minimum number of boxes required to empty the array A.*/
+
+  import java.util.*;
+class Main {
+    static long mod = 1000000007;
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int t = scanner.nextInt();
+        while (t-- > 0) {
+            int n = scanner.nextInt();
+            List<Long> a = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                a.add(scanner.nextLong());
+            }
+            long ans = 1;
+            Collections.sort(a, Collections.reverseOrder());
+            long xoro = a.get(0);
+            int i = 0;
+            int j = n - 1;
+            while (i < j) {
+                if (xoro >= a.get(j)) {
+                    xoro = xoro ^ a.get(j);
+                    j--;
+                } else {
+                    ans++;
+                    xoro = a.get(i);
+                    i++;
+                }
+            }
+            System.out.println(ans);
+        }
+    }
+}
