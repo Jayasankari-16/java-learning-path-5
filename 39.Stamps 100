@@ -1,0 +1,47 @@
+/* You are given a binary string S of length N.
+You can apply the following operation any (possibly zero) number of times:
+Select an integer i(1≤i≤N−2) and replace the substringSSi Si+1 Si+2  with 100Find the lexicographically smallest string after the operations.
+Note: String X is lexicographically smaller than string Y if Xi <Yi , where i is the first index where X and Y differ*/
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int t = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character after reading t
+        while (t-- > 0) {
+            solve(scanner);
+        }
+        scanner.close();
+    }
+
+    public static void solve(Scanner scanner) {
+        int n = scanner.nextInt();
+        scanner.nextLine(); // Consume the newline character after reading n
+        String s = scanner.nextLine();
+
+        int pos = -1;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '1') {
+                pos = i;
+                break;
+            }
+        }
+
+        if (pos == -1 || pos == (n - 1) || pos == (n - 2)) {
+            System.out.println(s);
+        } else {
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < pos; i++) {
+                result.append('0');
+            }
+            result.append('1');
+            for (int i = pos + 1; i < n; i++) {
+                result.append('0');
+            }
+            System.out.println(result);
+        }
+    }
+}
