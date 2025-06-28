@@ -1,0 +1,56 @@
+/* You are given an array A of N positive integers. Let G be the gcd of all the numbers in the array A.
+You have to find if there exist K non-empty, non-intersecting subarrays of A for which the arithmetic mean of the gcd of those K subarrays equals G.
+Formally, let g1 ,g2 ,…,gK be the gcd of those K chosen subarrays, then, (g1 +g2 +....+gK)=G should follow.If there exist K such subarrays, output YES, otherwise output NO.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+    public static void main(String[] args) throws java.lang.Exception
+    {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t-- > 0) {
+            int n = sc.nextInt();
+            int k = sc.nextInt();
+
+            int[] a = new int[n];
+            int gcd = a[0];
+            for (int i = 0; i < n; i++) {
+                a[i] = sc.nextInt();
+                gcd = gcd(gcd, a[i]);
+            }
+
+            boolean flag = true;
+            int gcdK = a[0];
+            int count = 0;
+            for (int i = 0; i < n; i++) {
+                if (flag) {
+                    gcdK = a[i];
+                    flag = false;
+                }
+                gcdK = gcd(gcdK, a[i]);
+                if (gcdK == gcd) {
+                    flag = true;
+                    count++;
+                }
+                if (count == k) {
+                    break;
+                }
+            }
+            if (count == k) {
+                System.out.println("YES");
+            } else {
+                System.out.println("NO");
+            }
+        }
+    }
+    public static int gcd(int a, int b) {
+        if (a == 0) {
+            return b;
+        }
+        return gcd(b % a, a);
+    }
+}
