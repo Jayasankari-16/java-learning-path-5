@@ -1,0 +1,149 @@
+/* You are given an array A of length N.Determine the count of subarrays of A which contain their length as an element.
+Formally, count the number of pairs (L,R) (1≤L≤R≤N) such that: (R−L+1)∈{AL,AL+1,…,AR }.*./
+
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+    private static BufferedReader reader=new BufferedReader(new InputStreamReader(System.in));
+	private static BufferedWriter writer=new BufferedWriter(new OutputStreamWriter(System.out));
+	private static long mod=(long)1E9+7L;
+	
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		int tt=Integer.parseInt(reader.readLine().trim());
+		while(tt-->0){
+		    int n=Integer.parseInt(reader.readLine().trim());
+		    int[] a=parseInt(reader.readLine().trim());
+		    Set<Integer> idxSet[]=new HashSet[n+1];
+		    for(int i=0;i<=n;i++){
+		        idxSet[i]=new HashSet<>();
+		    }
+		    for(int i=0;i<n;i++){
+		        int k=a[i];
+		        idxSet[k].add(i+1);
+		    }
+		    long ans=0;
+		    for(int i=1;i<=n;i++){
+		        Set<Integer> set=idxSet[i];
+		        List<int[]> ranges=new ArrayList<>();
+		        for(int idx: set){
+		            int l=(int)Math.max(1, idx-i+1), r=(int)Math.min(n, idx+i-1);
+		            int end=r-i+1;
+		            if(l<=end){
+		                ranges.add(new int[]{l, end});
+		            }
+		        }
+		        Collections.sort(ranges, (x, y)->Integer.compare(x[0], y[0]));
+		        List<int[]> merged=new ArrayList<>();
+		        for(int[] r: ranges){
+		            if(merged.isEmpty()){
+		                merged.add(r);
+		            }else{
+		                if(isOverlapping(r, merged.get(merged.size()-1))){
+		                    int[] temp=merged.remove(merged.size()-1);
+		                    merged.add(new int[]{Math.min(temp[0], r[0]), Math.max(temp[1], r[1])});
+		                }else{
+		                    merged.add(r);
+		                }
+		            }
+		        }
+		        for(int[] m: merged){
+		          //  System.out.println(Arrays.toString(m));
+		            ans+=(m[1]-m[0]+1L);
+		        }
+		    }
+		    writer.write(ans+"\n");
+		}
+		writer.flush();
+	}
+	
+	private static boolean isOverlapping(int[] a, int[] b){
+	    if(a[1]<b[0] || b[1]<a[0]){
+	        return false;
+	    }
+	    return true;
+	}
+	
+	private static long mod(long n, long m){
+	    if(n>=0){
+	        return n%m;
+	    }
+	    return ((m-Math.abs(n)%m))%m;
+	}
+	
+	private static void printArray(int[] nums) throws java.lang.Exception{
+	    for(int i=0;i<nums.length;i++){
+	        writer.write((i==0?"":" ")+nums[i]);
+	    }
+	    writer.write("\n");
+	}
+	
+	private static void printArray(long[] nums) throws java.lang.Exception{
+	    for(int i=0;i<nums.length;i++){
+	        writer.write((i==0?"":" ")+nums[i]);
+	    }
+	    writer.write("\n");
+	}
+    
+    private static int[] parseInt(String str) {
+        String[] parts=str.split("\\s+");
+        int[] ans=new int[parts.length];
+        for(int i=0;i<ans.length;i++){
+            ans[i]=Integer.parseInt(parts[i]);
+        }
+        return ans;
+    }
+
+    private static long[] parseLong(String str) {
+        String[] parts=str.split("\\s+");
+        long[] ans=new long[parts.length];
+        for(int i=0;i<ans.length;i++){
+            ans[i]=Long.parseLong(parts[i]);
+        }
+        return ans;
+    }
+    
+    private static int[] parseInt(String str, int n) {
+        int[] ans = new int[n];
+        int idx = 0;
+        for (int k = 0; k < str.length(); ) {
+            int j = k;
+            int sum = 0;
+            while (j < str.length() && str.charAt(j) != ' ') {
+                if (str.charAt(j) == '-') {
+                    j++;
+                    continue;
+                }
+                sum = sum * 10 + str.charAt(j) - '0';
+                j++;
+            }
+            ans[idx++] = (str.charAt(k) == '-' ? -1 : 1) * sum;
+            k = j + 1;
+        }
+        return ans;
+    }
+    
+    private static long[] parseLong(String str, int n) {
+        long[] ans = new long[n];
+        int idx = 0;
+        for (int k = 0; k < str.length(); ) {
+            int j = k;
+            long sum = 0L;
+            while (j < str.length() && str.charAt(j) != ' ') {
+                if (str.charAt(j) == '-') {
+                    j++;
+                    continue;
+                }
+                sum = sum * 10 + str.charAt(j) - '0';
+                j++;
+            }
+            ans[idx++] = (str.charAt(k) == '-' ? -1L : 1L) * sum;
+            k = j + 1;
+        }
+        return ans;
+    }
+}
