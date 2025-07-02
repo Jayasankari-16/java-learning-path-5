@@ -1,0 +1,75 @@
+/* For two positive integers a and b, let g(a,b)= gcd (a,b)+ lcm(a,b).
+For a positive integer N, let f(N) denote the minimum value of g(a,b) over all the pairs of positive integers (a,b) such that a+b=N.
+Find out the number of ordered pairs (a,b) such that a+b=N and g(a,b)=f(N).*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+    static HashMap<Integer,Integer> hm;
+    static ArrayList<Integer> al;
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		Scanner sc= new Scanner(System.in);
+        int t = sc.nextInt();
+        boolean val[]=new boolean[1000000];
+        al=new ArrayList<>();
+        for(int i=2;i<val.length;i++){
+            if(!val[i]){
+                al.add(i);
+                int x=i;
+                for(int j=i*2;j<val.length;j+=x){
+                    val[j]=true;
+                }
+            }
+        }
+        while(t-->0){
+            int n=sc.nextInt();
+            hm=new HashMap<>();
+            getFactors(n);
+            long prod=1;
+            //System.out.println(hm);
+            for(Map.Entry m: hm.entrySet()){
+                prod*= ((int)m.getValue()+1);
+            }
+            long fact=(prod-1)*2;
+            System.out.println(n%2!=0?fact:fact-1);
+        }
+	}
+	public static boolean isPrime(int n){
+	    for(int i=2;i*i<=n;i++){
+	        if(n%i==0)
+	        {
+	            return false;
+	        }
+	    }
+	    return true;
+	}
+	public static void getFactors(int n){
+        int i=0;
+        while(n>1 && i<al.size())
+        {
+            int val=al.get(i);
+            if(val>n)
+                break;
+            while(n % val == 0){
+                update(val);
+                n/=val;
+            }
+            i++;
+        }
+        if(n>1){
+            update(n);
+        }
+    }
+    public static void update(int i){
+        if(hm.get(i)==null){
+            hm.put(i,1);
+        }
+        else{
+            hm.put(i,hm.get(i)+1);
+        }
+    }
+}
