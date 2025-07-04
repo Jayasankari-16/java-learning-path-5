@@ -1,0 +1,99 @@
+/* Read problem statements in Bengali, Mandarin Chinese, Russian, and Vietnamese as well.
+The MEX (minimum excluded) of an array is the smallest non-negative integer that does not belong to the array. For instance:
+The MEX of [2,2,1] is 0, because 0 does not belong to the array.The MEX of [3,1,0,1] is 2, because 0 and 1 belong to the array, but 2 does not.
+The MEX of [0,3,1,2] is 4 because 0,1,2 and 3 belong to the array, but 4 does not.
+Find the maximum possible MEX of an array of non-negative integers such that the bitwise OR of the elements in the array does not exceed X.*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+        static class FastReader {
+        BufferedReader br;
+        StringTokenizer st;
+
+        public FastReader() {
+            br = new BufferedReader(new InputStreamReader(System.in));
+        }
+
+        String next() {
+            while (st == null || !st.hasMoreTokens()) {
+                try {
+                    st = new StringTokenizer(br.readLine());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return st.nextToken();
+        }
+
+        int nextInt() {
+            return Integer.parseInt(next());
+        }
+
+        long nextLong() {
+            return Long.parseLong(next());
+        }
+
+        double nextDouble() {
+            return Double.parseDouble(next());
+        }
+
+        String nextLine() {
+            String str = "";
+            try {
+                str = br.readLine().trim();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return str;
+        }
+    }
+    static class FastWriter {
+        private final BufferedWriter bw;
+
+        public FastWriter() {
+            this.bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        }
+
+        public void print(Object object) throws IOException {
+            bw.append("").append(String.valueOf(object));
+        }
+
+        public void println(Object object) throws IOException {
+            print(object);
+            bw.append("\n");
+        }
+
+        public void close() throws IOException {
+            bw.close();
+        }
+    }
+    
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		FastReader in = new FastReader();
+        FastWriter out = new FastWriter();
+        int t = in.nextInt();
+        while (t-- > 0){
+            int x = in.nextInt();
+            if(x == 0){
+                out.println(1);
+                continue;
+            }
+            int pow = (int) Math.floor(Math.log(x)/Math.log(2));
+            if(((x+1) & x) == 0){
+                int j = 1;
+                j <<= (pow+1);
+                out.println(j);
+            } else{
+                int j = 1;
+                j <<= pow;
+                out.println(j);
+            }
+        }
+        out.close();
+	}
+}
