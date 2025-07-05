@@ -1,0 +1,37 @@
+/* Ram and Shyam are sitting next to each other, hoping to cheat on an exam. However, the examination board has prepared 
+p different sets of questions (numbered 0 through p−1), which will be distributed to the students in the following way:
+The students are assigned roll numbers — pairwise distinct positive integers.If a student's roll number is r, this student gets the ((r−1)%p)-th set of questions.
+Obviously, Ram and Shyam can cheat only if they get the same set of questions.You are given the roll numbers of Ram and Shyam: A and B respectively.
+Find the number of values of p for which they can cheat, or determine that there is an infinite number of such values*/
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef {
+
+  private static final int MOD = 1_000_000_007;
+
+  private static int countFactors(int n) {
+    int count = 0;
+    for (int i = 1; i * i <= n; i++) {
+      if (n % i == 0) {
+        count += (i == n / i) ? 1 : 2;
+      }
+    }
+    return count;
+  }
+
+  public static void main(String[] args) {
+    Scanner in = new Scanner(System.in);
+    int t = in.nextInt();
+
+    while (t-- != 0) {
+      int a = in.nextInt();
+      int b = in.nextInt();
+      System.out.println(countFactors(Math.abs(a - b)));
+    }
+
+    in.close();
+  }
+}
